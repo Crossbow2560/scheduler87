@@ -39,7 +39,7 @@ export default function EventList({ date, events, onRemove, onUpdate }: Props) {
   return (
     <>
       <div>
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="sync">
           {dayEvents.length === 0 ? (
             <motion.p
               key="empty"
