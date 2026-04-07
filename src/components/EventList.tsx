@@ -13,10 +13,7 @@ export default function EventList({ date, events, onRemove }: Props) {
   const dayEvents = events.filter((e) => isSameDay(e.date, date));
 
   return (
-    <div className="mt-6">
-      <h3 className="font-heading text-xl text-foreground mb-3">
-        {format(date, "MMMM d, yyyy")}
-      </h3>
+    <div>
       <AnimatePresence mode="popLayout">
         {dayEvents.length === 0 ? (
           <motion.p
