@@ -42,27 +42,42 @@ export default function CalendarGrid({ month, events, selectedDate, onSelectDate
               key={day.toISOString()}
               onClick={() => onSelectDate(day)}
               className={cn(
-                "relative flex flex-col items-center py-3 transition-colors rounded-lg mx-0.5 my-0.5",
+                "relative flex flex-col items-start p-1.5 sm:p-2 transition-colors rounded-lg mx-0.5 my-0.5 min-h-[4rem] sm:min-h-[5rem]",
                 !inMonth && "opacity-30",
                 inMonth && "hover:bg-sage-50",
-                selected && "bg-primary text-primary-foreground hover:bg-primary",
+                selected && "bg-primary/10 ring-1 ring-primary hover:bg-primary/10",
                 today && !selected && "ring-1 ring-sage-200"
               )}
             >
-              <span className={cn("text-sm", selected ? "font-medium" : "font-light")}>
+              <span
+                className={cn(
+                  "text-xs sm:text-sm leading-none mb-1",
+                  selected ? "font-semibold text-primary" : "font-light text-foreground",
+                  today && !selected && "font-medium"
+                )}
+              >
                 {day.getDate()}
               </span>
               {dayEvents.length > 0 && (
-                <div className="flex gap-0.5 mt-1">
-                  {dayEvents.slice(0, 3).map((e) => (
+                <div className="flex flex-col gap-0.5 w-full overflow-hidden">
+                  {dayEvents.slice(0, 2).map((e) => (
                     <span
                       key={e.id}
                       className={cn(
-                        "w-1 h-1 rounded-full",
-                        selected ? "bg-primary-foreground" : "bg-sage-400"
+                        "text-[10px] leading-tight truncate w-full text-left rounded px-1 py-0.5",
+                        selected
+                          ? "bg-primary/20 text-primary"
+                          : "bg-sage-100 text-muted-foreground"
                       )}
-                    />
+                    >
+                      {e.title}
+                    </span>
                   ))}
+                  {dayEvents.length > 2 && (
+                    <span className="text-[9px] text-muted-foreground pl-1">
+                      +{dayEvents.length - 2} more
+                    </span>
+                  )}
                 </div>
               )}
             </button>

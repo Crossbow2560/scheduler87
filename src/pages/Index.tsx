@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, LogOut, Calendar, User } from "lucide-react";
+import { ChevronLeft, ChevronRight, LogOut, Calendar } from "lucide-react";
 import { addMonths, subMonths, format } from "@/lib/calendar";
 import { useEvents } from "@/hooks/useEvents";
 import { useAuth } from "@/contexts/AuthContext";
@@ -28,7 +28,7 @@ export default function Index() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Navbar */}
       <nav className="border-b border-border bg-background/95 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
-        <div className="max-w-5xl mx-auto w-full flex items-center justify-between px-6 py-3">
+        <div className="max-w-6xl mx-auto w-full flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2">
             <Calendar size={20} className="text-primary" />
             <span className="font-heading text-xl text-foreground">Cal</span>
@@ -60,42 +60,46 @@ export default function Index() {
       </nav>
 
       {/* Main content */}
-      <div className="flex-1 flex items-start justify-center px-4 pt-20 pb-10 sm:pt-24 sm:pb-16">
-        <div className="w-full max-w-md">
-          {/* Month header */}
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="font-heading text-3xl text-foreground tracking-tight">
-              {format(currentMonth, "MMMM yyyy")}
-            </h1>
-            <div className="flex gap-1 items-center">
-              <button
-                onClick={() => setCurrentMonth((m) => subMonths(m, 1))}
-                className="p-2 rounded-lg hover:bg-sage-50 text-muted-foreground transition-colors"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
-                className="p-2 rounded-lg hover:bg-sage-50 text-muted-foreground transition-colors"
-              >
-                <ChevronRight size={18} />
-              </button>
+      <div className="flex-1 flex justify-center px-4 pt-20 pb-10 sm:pt-24 sm:pb-16">
+        <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-8">
+          {/* Left: Calendar */}
+          <div className="flex-1 min-w-0">
+            {/* Month header */}
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="font-heading text-3xl text-foreground tracking-tight">
+                {format(currentMonth, "MMMM yyyy")}
+              </h1>
+              <div className="flex gap-1 items-center">
+                <button
+                  onClick={() => setCurrentMonth((m) => subMonths(m, 1))}
+                  className="p-2 rounded-lg hover:bg-sage-50 text-muted-foreground transition-colors"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={() => setCurrentMonth((m) => addMonths(m, 1))}
+                  className="p-2 rounded-lg hover:bg-sage-50 text-muted-foreground transition-colors"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
             </div>
+
+            <CalendarGrid
+              month={currentMonth}
+              events={events}
+              selectedDate={selectedDate}
+              onSelectDate={setSelectedDate}
+            />
           </div>
 
-          {/* Calendar */}
-          <CalendarGrid
-            month={currentMonth}
-            events={events}
-            selectedDate={selectedDate}
-            onSelectDate={setSelectedDate}
-          />
-
-          {/* Events section */}
+          {/* Right: Event panel */}
           {selectedDate && (
-            <div className="mt-6 pt-6 border-t border-border">
-              <div className="flex items-center justify-between mb-1">
-                <div />
+            <div className="w-full lg:w-80 lg:border-l lg:border-border lg:pl-8 shrink-0">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-heading text-xl text-foreground">
+                  {format(selectedDate, "MMMM d, yyyy")}
+                </h2>
                 <AddEventDialog date={selectedDate} onAdd={addEvent} />
               </div>
               <EventList date={selectedDate} events={events} onRemove={removeEvent} />
