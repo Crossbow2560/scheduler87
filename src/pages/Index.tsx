@@ -17,7 +17,7 @@ import {
 export default function Index() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const { events, addEvent, removeEvent } = useEvents();
+  const { events, addEvent, updateEvent, removeEvent } = useEvents();
   const { user, signOut } = useAuth();
 
   const avatarUrl = user?.user_metadata?.avatar_url;
@@ -102,7 +102,7 @@ export default function Index() {
                 </h2>
                 <AddEventDialog date={selectedDate} onAdd={addEvent} />
               </div>
-              <EventList date={selectedDate} events={events} onRemove={removeEvent} />
+              <EventList date={selectedDate} events={events} onRemove={removeEvent} onUpdate={updateEvent} />
             </div>
           )}
         </div>

@@ -8,7 +8,6 @@ export function useEvents() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch events from Supabase
   useEffect(() => {
     if (!user) {
       setEvents([]);
@@ -72,6 +71,30 @@ export function useEvents() {
     [user]
   );
 
+  const updateEvent = useCallback(
+    async (id: string, updates: Partial<Omit<CalendarEvent, "id">>) => {
+      if (!user) return;
+      const payload: Record<string, any> = {};
+      if (updates.title !== undefined) payload.title = updates.title;
+      if (updates.date !== undefined) payload.date = updates.date.toISOString().split("T")[0];
+      if (updates.time !== undefined) payload.time = updates.time || null;
+      if (updates.color !== undefined) payload.color = updates.color || null;
+
+      const { error } = await supabase
+        .from("events")
+        .update(payload)
+        .eq("id", id)
+        .eq("user_id", user.id);
+
+      if (!error) {
+        setEvents((prev) =>
+          prev.map((e) => (e.id === id ? { ...e, ...updates } : e))
+        );
+      }
+    },
+    [user]
+  );
+
   const removeEvent = useCallback(
     async (id: string) => {
       if (!user) return;
@@ -81,5 +104,5 @@ export function useEvents() {
     [user]
   );
 
-  return { events, addEvent, removeEvent, loading };
+  return { events, addEvent, updateEvent, removeEvent, loading };
 }
