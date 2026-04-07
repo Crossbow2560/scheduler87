@@ -102,7 +102,7 @@ export default function Index() {
                 </h2>
                 <AddEventDialog date={selectedDate} onAdd={addEvent} />
               </div>
-              <EventList date={selectedDate} events={events} onRemove={removeEvent} />
+              <EventList date={selectedDate} events={events} onRemove={removeEvent} onUpdate={updateEvent} />
             </div>
           )}
         </div>
