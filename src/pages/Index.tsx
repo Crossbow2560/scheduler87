@@ -27,7 +27,7 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Navbar */}
-      <nav className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-30">
+      <nav className="border-b border-border bg-background/95 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
         <div className="max-w-5xl mx-auto w-full flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-2">
             <Calendar size={20} className="text-primary" />
@@ -60,7 +60,7 @@ export default function Index() {
       </nav>
 
       {/* Main content */}
-      <div className="flex-1 flex items-start justify-center px-4 py-10 sm:py-16">
+      <div className="flex-1 flex items-start justify-center px-4 pt-20 pb-10 sm:pt-24 sm:pb-16">
         <div className="w-full max-w-md">
           {/* Month header */}
           <div className="flex items-center justify-between mb-8">
