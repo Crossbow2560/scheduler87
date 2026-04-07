@@ -60,7 +60,7 @@ export default function Index() {
       </nav>
 
       {/* Main content */}
-      <div className="flex-1 flex items-start justify-center px-4 py-10 sm:py-16">
+      <div className="flex-1 flex items-start justify-center px-4 pt-20 pb-10 sm:pt-24 sm:pb-16">
         <div className="w-full max-w-md">
           {/* Month header */}
           <div className="flex items-center justify-between mb-8">
